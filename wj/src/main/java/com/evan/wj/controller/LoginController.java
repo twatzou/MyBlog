@@ -12,14 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
-import java.util.Objects;
-
 @Controller
 public class LoginController {
 
     @Autowired
     UserService service;
-
 
     @CrossOrigin
     @PostMapping(value = "api/login")
@@ -29,7 +26,12 @@ public class LoginController {
         username = HtmlUtils.htmlEscape(username);
 
         User user = service.get(username, requestUser.getPassword());
-
+        if (null == user) {
+            return new Result(400);
+        }
+        return new Result(200);
 
     }
+
+
 }
